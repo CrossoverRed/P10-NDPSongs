@@ -21,6 +21,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="SHOW ALL SONGS WITH 5 STARS" />
+
+            <Button
+                android:id="@+id/buttonShowAll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Show All Songs" />
+
             <Button
                 android:id="@+id/backbtn"
                 android:layout_width="match_parent"

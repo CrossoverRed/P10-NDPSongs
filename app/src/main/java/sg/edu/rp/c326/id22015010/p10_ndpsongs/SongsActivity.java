@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class SongsActivity extends AppCompatActivity {
     ListView lv;
-    Button backButton;
+    Button backButton, btnShowAll;
     DBHelper dbHelper;
     ArrayList<Song> songsList;
     CustomAdapter aa;
@@ -28,6 +28,7 @@ public class SongsActivity extends AppCompatActivity {
 
         lv = findViewById(R.id.listview);
         backButton = findViewById(R.id.backbtn);
+        btnShowAll=findViewById(R.id.buttonShowAll);
         songsList = new ArrayList<>();
         yearSpinner = findViewById(R.id.yearSpinner);
 
@@ -35,6 +36,13 @@ public class SongsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+        Button showAllButton = findViewById(R.id.buttonShowAll);
+        showAllButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAllSongs();
             }
         });
         Spinner yearSpinner = findViewById(R.id.yearSpinner);
@@ -100,13 +108,14 @@ public class SongsActivity extends AppCompatActivity {
 
     private void showSongsWithFiveStars() {
         ArrayList<Song> filteredSongs = new ArrayList<>();
-        for (Song song : songsList) {
+        for (Song song : dbHelper.getAllSongs()) {
             if (song.getStars() == 5) {
                 filteredSongs.add(song);
             }
         }
         aa.clear();
         aa.addAll(filteredSongs);
+        aa.notifyDataSetChanged();
     }
     private void filterSongsByYear(int selectedYear) {
         ArrayList<Song> filteredSongs = new ArrayList<>();
@@ -117,6 +126,12 @@ public class SongsActivity extends AppCompatActivity {
         }
         aa.clear();
         aa.addAll(filteredSongs);
+        aa.notifyDataSetChanged();
+    }
+    private void showAllSongs() {
+        ArrayList<Song> allSongs = dbHelper.getAllSongs();
+        aa.clear();
+        aa.addAll(allSongs);
         aa.notifyDataSetChanged();
     }
 }
